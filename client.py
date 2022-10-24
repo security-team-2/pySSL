@@ -26,10 +26,9 @@ class ssl_client():
         print(self.received)
         print(client_ssl.version())
 
-        print ("\nBytes Sent:       {}".format(self.msg)+ "\nBytes Received:   {}".format(self.received.decode()))
-        print ("Server Response: ", self.received.decode())
+        print ("\nBytes Sent:       {}".format(self.msg)+ "\nServer Response: ", self.received)
 
         client_ssl.close()
 
 msg = "Canales te echamos de menos :("
-ssl_client(host_ip, server_port, msg)
+ssl_client(host_ip, server_port, msg).connect()
