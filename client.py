@@ -1,6 +1,8 @@
 import socket
 import ssl
 
+import conf
+
 host_ip, server_port = "127.0.0.1", 9999
 
 class ssl_client():
@@ -13,7 +15,7 @@ class ssl_client():
     def connect(self):
         
         purpose = ssl.Purpose.SERVER_AUTH # Passing this as the purpose sets verify_mode to CERT_REQUIRED 
-        context = ssl.create_default_context(purpose, cafile='cert\ca-cert.pem') # Returns a context with default settings and loads specific CA certificates if given or loads default CA certificates
+        context = ssl.create_default_context(purpose, cafile=conf.CLNT_CERT_AT) # Returns a context with default settings and loads specific CA certificates if given or loads default CA certificates
         
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_ssl = context.wrap_socket(client,server_hostname=host_ip)
