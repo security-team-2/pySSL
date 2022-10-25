@@ -1,0 +1,5 @@
+
+[25/10/22 08:38:36] [SRC_IP: ('127.0.0.1', 62288)] 200 ACK [USER: pabgalace] [PASS: 12345] [MSG: Canales te echamos de menos :(]
+[25/10/22 08:40:03] [SRC_ADDR: ('127.0.0.1', 55588)] [200 ACK] [USER: pabgalace] [PASS: 12345] [MSG: Canales te echamos de menos :(]
+[25/10/22 08:40:09] [SRC_ADDR: ('127.0.0.1', 55597)] [401 Unauthorized] [USER: pepe] [PASS: 12345] [MSG: Canales te echamos de menos :(]
+[25/10/22 08:40:19] [SRC_ADDR: ('127.0.0.1', 55606)] [401 Unauthorized] [USER: pabgalace] [PASS: 1] [MSG: Canales te echamos de menos :(]
