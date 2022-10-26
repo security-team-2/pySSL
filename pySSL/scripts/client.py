@@ -37,7 +37,7 @@ class ssl_client():
 
 if __name__ == "__main__":
 
-    user = "pabgalace"
+    user = "pepe"
     password = "12345"
     msg = "Canales te echamos de menos :("
 

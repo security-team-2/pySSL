@@ -19,3 +19,4 @@ CREDENTIALS = os.path.join(PATH,"credentials","credentials.pickle")
 
 # Log
 LOG = os.path.join(PATH, "logs", "log.txt")
+LOG_ERR = os.path.join(PATH,"logs","err_log.txt")
