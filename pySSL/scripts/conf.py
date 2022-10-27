@@ -17,6 +17,10 @@ SERV_PRIV_KEY = os.path.join(PATH,"cert","server-key.pem")
 # Almacenamiento usuario y pass
 CREDENTIALS = os.path.join(PATH,"credentials","credentials.pickle")
 
+# Reportes
+PDFS_FOLDER = os.path.join(PATH,"reports")
+GRAPHS_FOLDER = os.path.join(PATH,"reports","graphs")
+
 # Log
 LOG = os.path.join(PATH, "logs", "log.txt")
 LOG_ERR = os.path.join(PATH,"logs","err_log.txt")

@@ -23,11 +23,11 @@ class Reports():
             print("Error sending email")
 
     def report_data(self):
-        with open(conf.LOGS, "r") as f:
+        with open(conf.LOG, "r") as f:
             self.date = f.readlines()[-1].split(" ")[0].replace("/","-").strip("[")
             f = open(conf.LOG_ERR).readlines() 
             self.pass_err, self.usr_err = (int(f[i].split(":")[1].strip()) for i in range(2))
-            self.accesses = len(open(conf.LOGS, "r").readlines())-1
+            self.accesses = len(open(conf.LOG, "r").readlines())-1
             self.accesses_na = self.accesses - ((self.pass_err) +self.usr_err)
 
     def craft_graphic(self):
@@ -56,7 +56,7 @@ class Reports():
         pdf.set_font('Times', 'B', 1)
         pdf.cell(200, 10, txt = "",ln = 1, align = 'C')
         pdf.set_font('Times', 'B', 40)
-        pdf.cell(200, 10, txt = "INTEGRITY CHECK",ln = 1, align = 'C')
+        pdf.cell(200, 10, txt = "SSL SERVER CHECK",ln = 1, align = 'C')
         pdf.set_font('Times', 'B', 16)
         pdf.cell(200, 10, txt = self.date+" report""\n\n" ,ln = 1, align = 'C')
         pdf.image(os.path.join(conf.GRAPHS_FOLDER, "graphic"+self.date+".png"),20,60, h=100,w=180)
@@ -64,19 +64,19 @@ class Reports():
         pdf.set_left_margin(32)
         pdf.set_font("Times",style="")
         pdf.cell(200, 20, txt = "",ln = 1, align = 'C')
-        pdf.cell(200, 10, txt = "· Nº of Man in the Middle attacks detected: "+str(self.pass_err),ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Nº of Replay attacks detected: "+str(self.usr_err),ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Nº of total transmissions: "+str(self.accesses),ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· KPI = (transmissions w/o attacks) / total transmissions",ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Percentage of transmissions w/o attacks (KPI): "+str("{:%}".format(percentage)),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Incorrect passsword errors: "+str(self.pass_err),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Invalid user errors: "+str(self.usr_err),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Total connections: "+str(self.accesses),ln = 1, align = 'L')
+        #pdf.cell(200, 10, txt = "· KPI = (transmissions w/o attacks) / total transmissions",ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Percentage of Valid Connections: "+str("{:%}".format(percentage)),ln = 1, align = 'L')
         pdf.output(os.path.join(conf.PDFS_FOLDER,"report-"+self.date+".pdf"), "F")
 
     def craft_email(self):
         message = MIMEMultipart()
         message["From"]= "mail@attacks.pai"
         message["To"]= "sysadmin@attacks.com"
-        message["Subject"]= "Transmissions'_Integrity_Report"+self.date
-        text_message = MIMEText("The pdf file with the transmissions report is attached. \n Best regards.")
+        message["Subject"]= "SSL server Report "+self.date
+        text_message = MIMEText("The pdf file with the SSL server report is attached. \n Best regards.")
         message.attach(text_message)
 
         pdfname= "report-"+self.date+".pdf"
