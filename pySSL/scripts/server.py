@@ -102,4 +102,3 @@ class ssl_server():
      
 if __name__ == "__main__":
     ssl_server().server()
-

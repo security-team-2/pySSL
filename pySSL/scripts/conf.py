@@ -24,3 +24,6 @@ GRAPHS_FOLDER = os.path.join(PATH,"reports","graphs")
 # Log
 LOG = os.path.join(PATH, "logs", "log.txt")
 LOG_ERR = os.path.join(PATH,"logs","err_log.txt")
+
+# Task
+TASKSC = "SCHTASKS /CREATE /SC DAILY /TN PYSSL\revisionTask /TR " +os.path.join(PATH,"reports.exe")+" /ST "

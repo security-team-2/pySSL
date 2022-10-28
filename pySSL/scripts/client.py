@@ -1,7 +1,9 @@
 import socket
 import ssl
+import time
 
 import conf
+
 
 host_ip, server_port = "127.0.0.1", 9999
 
@@ -21,19 +23,20 @@ class ssl_client():
         
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_ssl = context.wrap_socket(client,server_hostname=host_ip)
-        
+        # Let socket wrap correctly
+
         client_ssl.connect((host_ip,server_port))
 
         self.data =  "|".join([self.user,self.password,self.msg])
         client_ssl.sendall(self.data.encode())
         self.received = client_ssl.recv(1024).decode("utf-8")
-
+        client_ssl.close()
         print(self.received)
         print(client_ssl.version())
 
         print ("\nBytes Sent:       {}".format(self.data)+ "\nServer Response: ", self.received)
 
-        client_ssl.close()
+
 
 if __name__ == "__main__":
 
