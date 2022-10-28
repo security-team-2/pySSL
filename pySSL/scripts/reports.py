@@ -26,22 +26,22 @@ class Reports():
         with open(conf.LOG, "r") as f:
             self.date = f.readlines()[-1].split(" ")[0].replace("/","-").strip("[")
             f = open(conf.LOG_ERR).readlines() 
-            self.pass_err, self.usr_err = (int(f[i].split(":")[1].strip()) for i in range(2))
+            self.pass_err, self.usr_err, self.ssl_err = (int(f[i].split(":")[1].strip()) for i in range(3))
             self.accesses = len(open(conf.LOG, "r").readlines())-1
-            self.accesses_na = self.accesses - ((self.pass_err) +self.usr_err)
+            self.accesses_na = self.accesses - (self.pass_err+self.usr_err+self.ssl_err)
 
     def craft_graphic(self):
-        values = [self.accesses_na, self.pass_err, self.usr_err]
-        legend = ["Transmissions w/o attacks", "Man in the Middle attacks", "Replay attacks"]
+        values = [self.accesses_na, self.pass_err, self.usr_err, self.ssl_err]
+        legend = ["Valid Connections", "Incorrect Password incidences", "Invalid user incidences", "SSL Errors"]
         f1 = {"family": "Arial","color": "black", "size": 20, "fontweight": "roman"}
-        colors = ["lightskyblue", "lightcoral", "gold"]
-        explode = [0, 0.2, 0.2]
+        colors = ["lightskyblue", "lightcoral", "gold", "darkorchid"]
+        explode = [0, 0.2, 0.2, 0.2]
         percentages = list()
         for i in values: percentages.append(100.*float(i)/sum(values))
         labels = ['{0} - {1:1.2f} %'.format(i,j) for i,j in zip(legend, percentages)]
         plt.figure(figsize=(7,3))
         plt.pie(values,startangle=90,shadow=True,explode=explode,colors=colors)
-        plt.title("Transmissions & Attacks\n",fontdict=f1)
+        plt.title("Conexions\n",fontdict=f1)
         plt.legend(labels,loc="upper left",fontsize="x-small")
         plt.axis("equal")
         plt.savefig(os.path.join(conf.GRAPHS_FOLDER,"graphic"+self.date+".png"),bbox_inches='tight',dpi=300)
@@ -66,6 +66,7 @@ class Reports():
         pdf.cell(200, 20, txt = "",ln = 1, align = 'C')
         pdf.cell(200, 10, txt = "· Incorrect passsword errors: "+str(self.pass_err),ln = 1, align = 'L')
         pdf.cell(200, 10, txt = "· Invalid user errors: "+str(self.usr_err),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· SSL Errors: "+str(self.ssl_err),ln = 1, align = 'L')
         pdf.cell(200, 10, txt = "· Total connections: "+str(self.accesses),ln = 1, align = 'L')
         #pdf.cell(200, 10, txt = "· KPI = (transmissions w/o attacks) / total transmissions",ln = 1, align = 'L')
         pdf.cell(200, 10, txt = "· Percentage of Valid Connections: "+str("{:%}".format(percentage)),ln = 1, align = 'L')
@@ -73,8 +74,8 @@ class Reports():
 
     def craft_email(self):
         message = MIMEMultipart()
-        message["From"]= "mail@attacks.pai"
-        message["To"]= "sysadmin@attacks.com"
+        message["From"]= "mail@ssl.pai"
+        message["To"]= "sysadmin@ssl_server.com"
         message["Subject"]= "SSL server Report "+self.date
         text_message = MIMEText("The pdf file with the SSL server report is attached. \n Best regards.")
         message.attach(text_message)
