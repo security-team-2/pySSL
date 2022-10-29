@@ -15,7 +15,6 @@ host_ip, server_port = "127.0.0.1", 9999
 def prueba_300():
     res = {}
     tiempo1 = time.time()
-    x = random.random()
     i = 0
     j=0
     while(i<300):
@@ -38,6 +37,7 @@ def prueba_300():
     os.system("taskkill /f /im  server.exe")
     print(res)
     return res
+
 def avg_metric_graph():
     """
     Returns a bar graph showing the access time of 100 regular messages and 100 MitM modified messages alongside their average values
@@ -47,17 +47,19 @@ def avg_metric_graph():
 
     x = list(regular_time_access.keys())
     y = list(regular_time_access.values())
-    co = np.arange(len(x))
     
     #plt.bar(co-0.2,y,width=0.4,color = "lightskyblue",label="regular msgs")
     #plt.bar(co+0.2,y1,width=0.4, color = "lightcoral", label= "MitM msgs")
+
     #plt.bar(regular_time_access.keys(), regular_time_access.values(),width=0.4, color = "lightcoral", label= "MitM msgs")
-    plt.plot(regular_time_access.keys(), regular_time_access.values())
+    #plt.plot(regular_time_access.keys(), regular_time_access.values())
+    plt.stem(regular_time_access.keys(), regular_time_access.values())
+
     plt.xlabel("Server messages ")
     plt.ylabel("Response time (seconds)")
     plt.title("Server Performance Test (100 messages)")
 
-    plt.axhline(y=np.nanmean(y), color='black', linestyle='--', linewidth=3, label= "avg regular msg ="+(str(round(np.nanmean(y)*1000))+" miliseconds"))
+    plt.axhline(y=np.nanmean(y), color='black', linestyle='--', linewidth=3, label= "avg response time ="+(str(round(np.nanmean(y)*1000))+" miliseconds"))
     plt.legend()
     plt.show()
 
