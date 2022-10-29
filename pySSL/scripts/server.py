@@ -7,7 +7,7 @@ import time
 import conf
 
 host_ip, server_port = "127.0.0.1", 9999
-cipher = 'DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-GCM-SHA256' # REVISAR
+
 
 class ssl_server():
     
@@ -15,12 +15,11 @@ class ssl_server():
         self.time =time.strftime("[%d/%m/%y %H:%M:%S]", time.localtime())
         self.handler()
 
+
     def handler(self):
         self.attack_file()
         purpose=ssl.Purpose.CLIENT_AUTH # Passing this as the purpose sets verify_mode to CERT_REQUIRED 
         context = ssl.create_default_context(purpose, cafile=conf.SERV_CERT_AT) # Returns a context with default settings and loads specific CA certificates if given or loads default CA certificates
-
-        context.set_ciphers(cipher)
         context.load_cert_chain(conf.SERV_CERT_AT,conf.SERV_PRIV_KEY)
 
         while True:
@@ -61,17 +60,17 @@ class ssl_server():
 
         if self.user in credentials.keys():
             if credentials.get(self.user) == self.password:
-                self.conn.send(bytes(f"ACK, welcome to Server ('{host_ip}','{server_port}')...!", "utf-8"))
+                self.conn.sendall(bytes(f"ACK, welcome to Server ('{host_ip}','{server_port}')...!", "utf-8"))
                 message = self.time +" [SRC_ADDR: "+str(self.add)+"] [200 ACK] [USER: "+self.user+"] [PASS: "+self.password+"] [MSG: "+ self.msg+"]"
                 self.log(message,True)
             else:
-                self.conn.send(bytes(f"ERR_PASS ,rejected from Server ('{host_ip}','{server_port}')...!", "utf-8"))
+                self.conn.sendall(bytes(f"ERR_PASS ,rejected from Server ('{host_ip}','{server_port}')...!", "utf-8"))
                 message = self.time +" [SRC_ADDR: "+str(self.add)+"] [401 Unauthorized] [USER: "+self.user+"] [PASS: "+self.password+"] [MSG: "+ self.msg+"]"
                 self.log(message,True)
                 self.pass_err+=1
                 self.conn.close()
         else:
-            self.conn.send(bytes(f"INVALID_USER, rejected from Server ('{host_ip}','{server_port}')...!", "utf-8"))
+            self.conn.sendall(bytes(f"INVALID_USER, rejected from Server ('{host_ip}','{server_port}')...!", "utf-8"))
             message = self.time +" [SRC_ADDR: "+str(self.add)+"] [401 Unauthorized] [USER: "+self.user+"] [PASS: "+self.password+"] [MSG: "+ self.msg+"]"
             self.log(message,True)
             self.user_err+=1

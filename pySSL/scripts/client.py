@@ -1,6 +1,5 @@
 import socket
 import ssl
-import time
 
 import conf
 
@@ -31,8 +30,8 @@ class ssl_client():
         client_ssl.sendall(self.data.encode())
         self.received = client_ssl.recv(1024).decode("utf-8")
         client_ssl.close()
-        print(self.received)
-        print(client_ssl.version())
+        print("\n")
+        print(self.received)        
 
         print ("\nBytes Sent:       {}".format(self.data)+ "\nServer Response: ", self.received)
 
@@ -40,7 +39,7 @@ class ssl_client():
 
 if __name__ == "__main__":
 
-    user = "pepe"
+    user = "pabgalace"
     password = "12345"
     msg = "Canales te echamos de menos :("
 
