@@ -1,6 +1,7 @@
 import time
 import os
 import subprocess
+import getpass
 
 import conf
 from client import ssl_client
@@ -9,7 +10,7 @@ from client import ssl_client
 def request():
     print("\nAuthentication and message")
     user = input("Enter user: ")
-    password = input("Enter pass: ")
+    password = getpass.getpass("Enter user password: ")
     msg = input("Enter message: ")
 
     print("\nUser: "+user+" Message: "+ msg)
