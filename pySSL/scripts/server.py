@@ -71,7 +71,7 @@ class ssl_server():
             self.user_err += 1
             self.conn.close()
             print("\n")
-
+        self.write_attack()
         ssl_server.close()
 
     def attack_file(self): # Attack log file

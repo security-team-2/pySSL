@@ -590,3 +590,5 @@
 [29/10/22 19:01:11] [SRC_ADDR: ('127.0.0.1', 57208)] [401 Unauthorized] [USER: pabgalace] [PASS: 12345] [MSG: Canales te echamos de menos :(]
 [29/10/22 19:03:56] [SRC_ADDR: ('127.0.0.1', 57242)] [200 ACK] [USER: anarodlop12] [PASS: betis] [MSG: Canales te echamos de menos :(]
 [29/10/22 19:03:56] [SRC_ADDR: ('127.0.0.1', 57251)] [401 Unauthorized] [USER: pep] [PASS: betis] [MSG: Canales te echamos de menos :(]
+[29/10/22 19:07:11] [SRC_ADDR: ('127.0.0.1', 55882)] [401 Unauthorized] [USER: pep] [PASS: betis] [MSG: Canales te echamos de menos :(]
+[29/10/22 19:11:16] [SRC_ADDR: ('127.0.0.1', 56017)] [401 Unauthorized] [USER: pep] [PASS: betis] [MSG: Canales te echamos de menos :(]
