@@ -1,0 +1,16 @@
+To generate certificates -> gen.sh
+
+SERVER
+ -  Private key -> server-key.pem
+ -  Certificate -> server-cert.pem
+ -  Public key -> server-cert.pem
+ -  Domains where certificate is valid -> server-ext.txt 
+ -  Request certificate from the authority -> server-req.pem
+
+CLIENT
+
+AUTHORITY
+ - Authority certificate -> ca-cert.pem
+ - Private key -> ca-ker.pem
+ - ID of each certificate issued by the authority ->ca-cert.srl
+
