@@ -9,6 +9,7 @@ import smtplib
 
 import conf
 
+
 class Reports():
     """
     The purpose of this class is to create KPI graphics.
@@ -32,7 +33,7 @@ class Reports():
 
     def craft_graphic(self):
         values = [self.accesses_na, self.pass_err, self.usr_err, self.ssl_err]
-        legend = ["Valid Connections", "Incorrect Password incidences", "Invalid user incidences", "SSL Errors"]
+        legend = ["Valid Transmissions", "Incorrect Password Incidences", "Invalid User Incidences", "SSL Errors"]
         f1 = {"family": "Arial","color": "black", "size": 20, "fontweight": "roman"}
         colors = ["lightskyblue", "lightcoral", "gold", "darkorchid"]
         explode = [0, 0.2, 0.2, 0.2]
@@ -41,7 +42,7 @@ class Reports():
         labels = ['{0} - {1:1.2f} %'.format(i,j) for i,j in zip(legend, percentages)]
         plt.figure(figsize=(7,3))
         plt.pie(values,startangle=90,shadow=True,explode=explode,colors=colors)
-        plt.title("Connections\n",fontdict=f1)
+        plt.title("Transmissions\n",fontdict=f1)
         plt.legend(labels,loc="upper left",fontsize="x-small")
         plt.axis("equal")
         plt.savefig(os.path.join(conf.GRAPHS_FOLDER,"graphic"+self.date+".png"),bbox_inches='tight',dpi=300)
@@ -58,26 +59,25 @@ class Reports():
         pdf.set_font('Times', 'B', 40)
         pdf.cell(200, 10, txt = "SSL SERVER CHECK",ln = 1, align = 'C')
         pdf.set_font('Times', 'B', 16)
-        pdf.cell(200, 10, txt = self.date+" report\n" ,ln = 1, align = 'C') 
+        pdf.cell(200, 10, txt = self.date+" Report\n" ,ln = 1, align = 'C') 
         pdf.image(os.path.join(conf.GRAPHS_FOLDER, "graphic"+self.date+".png"), 20, 70, h=100,w=180)
         pdf.cell(200, 100, txt = "",ln = 1, align = 'L')
         pdf.set_left_margin(32)
         pdf.set_font("Times",style="")
         pdf.cell(200, 35, txt = "",ln = 1, align = 'C')
-        pdf.cell(200, 10, txt = "· Incorrect passsword errors: "+str(self.pass_err),ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Invalid user errors: "+str(self.usr_err),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Incorrect Passsword Errors: "+str(self.pass_err),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Invalid User Errors: "+str(self.usr_err),ln = 1, align = 'L')
         pdf.cell(200, 10, txt = "· SSL Errors: "+str(self.ssl_err),ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Total connections: "+str(self.accesses),ln = 1, align = 'L')
-        #pdf.cell(200, 10, txt = "· KPI = (transmissions w/o attacks) / total transmissions",ln = 1, align = 'L')
-        pdf.cell(200, 10, txt = "· Percentage of Valid Connections: "+str("{:%}".format(percentage)),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Total Transmissions: "+str(self.accesses),ln = 1, align = 'L')
+        pdf.cell(200, 10, txt = "· Percentage of Valid Transmissions: "+str("{:%}".format(percentage)),ln = 1, align = 'L')
         pdf.output(os.path.join(conf.PDFS_FOLDER,"report-"+self.date+".pdf"), "F")
 
     def craft_email(self):
         message = MIMEMultipart()
         message["From"]= "mail@ssl.pai"
         message["To"]= "sysadmin@ssl_server.com"
-        message["Subject"]= "SSL server Report "+self.date
-        text_message = MIMEText("The pdf file with the SSL server report is attached. \n Best regards.")
+        message["Subject"]= "SSL Server Report "+self.date
+        text_message = MIMEText("The pdf file with the SSL Server Report is attached. \n Best regards.")
         message.attach(text_message)
 
         pdfname= "report-"+self.date+".pdf"
@@ -89,7 +89,7 @@ class Reports():
         message.attach(payload)
 
         connection = smtplib.SMTP(host="localhost",port= 2500)
-        connection.sendmail(from_addr="mail@attacks.pai", to_addrs="sysadmin@attacks.com",msg=message.as_string())
+        connection.sendmail(from_addr="mail@ssl.pai", to_addrs="sysadmin@ssl_server.com",msg=message.as_string())
 
         connection.quit()
         

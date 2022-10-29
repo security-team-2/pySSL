@@ -10,7 +10,7 @@ class ssl_client():
 
     def __init__(self, host_ip, server_port, user, password, msg):
         self.host_ip = host_ip                                                                                 
-        self.server_port = server_port   
+        self.server_port = server_port
         self.user = user
         self.password = password                                                                              
         self.msg = msg                                                                                  
@@ -21,8 +21,7 @@ class ssl_client():
         context = ssl.create_default_context(purpose, cafile=conf.CLNT_CERT_AT) # Returns a context with default settings and loads specific CA certificates if given or loads default CA certificates
         
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_ssl = context.wrap_socket(client,server_hostname=host_ip)
-        # Let socket wrap correctly
+        client_ssl = context.wrap_socket(client,server_hostname=host_ip) # Wraps the socket correctly
 
         client_ssl.connect((host_ip,server_port))
 
@@ -39,8 +38,10 @@ class ssl_client():
 
 if __name__ == "__main__":
 
-    user = "pabgalace"
-    password = "12345"
+    ############Testing example########### 
+    user = "pep"
+    password = "betis"
     msg = "Canales te echamos de menos :("
+    #######################################
 
     ssl_client(host_ip, server_port,user,password,msg).connect()

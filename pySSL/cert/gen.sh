@@ -1,4 +1,4 @@
-rm *.pem # removes all pem files before begining
+rm *.pem # Removes all pem files before begining
 
 # 1. Generate CA's private key and self-signed certificate (CA Certifier Authority, x509 implies we are self-signing it rather than asking for one)
 #    openssl req -x509 -newkey rsa:4096 -days 365 -keyout ca-key.pem -out ca-cert.pem
@@ -25,4 +25,4 @@ openssl x509 -req -in server-req.pem -days 365 -CA ca-cert.pem -CAkey ca-key.pem
 echo "Server's signed certificate"
 openssl x509 -in server-cert.pem -noout -text
 
-openssl verify -CAfile ca-cert.pem server-cert.pem  #verifies if certificate is valid
+openssl verify -CAfile ca-cert.pem server-cert.pem  # Checks if the certificate is valid

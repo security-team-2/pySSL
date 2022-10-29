@@ -1,28 +1,24 @@
-from email import message
 import time
 import os
 import subprocess
-
 
 import conf
 from client import ssl_client
 
 
-
 def request():
-    print("\nAuthentification and message")
+    print("\nAuthentication and message")
     user = input("Enter user: ")
     password = input("Enter pass: ")
-    msg = input("Enter the mmesage: ")
+    msg = input("Enter message: ")
 
     print("\nUser: "+user+" Message: "+ msg)
     print("Sending message...")
 
     host_ip, server_port = "127.0.0.1", 9999
-    c1 = ssl_client(host_ip, server_port,user,password,msg).connect()
+    ssl_client(host_ip, server_port,user,password,msg).connect()
 
-if __name__ == "__main__":
-    
+if __name__ == "__main__":    
     print("Welcome to INSEGUS' configuration environment\n \
             \nWhat would you like to do?")
 
