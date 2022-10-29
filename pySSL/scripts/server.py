@@ -7,9 +7,10 @@ import time
 import conf
 
 host_ip, server_port = "127.0.0.1", 9999
-cipher = 'DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-GCM-SHA256'
+cipher = 'DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-GCM-SHA256' # REVISAR
 
 class ssl_server():
+    
     def __init__(self):
         self.time =time.strftime("[%d/%m/%y %H:%M:%S]", time.localtime())
         self.handler()
